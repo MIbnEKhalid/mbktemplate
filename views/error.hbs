@@ -1,0 +1,22 @@
+<div class="app-container" style="max-width: 600px; padding: 4rem 1.5rem; text-align: center;">
+  <div class="card" style="padding: 2.5rem 2rem;">
+    <div style="font-size: 3rem; color: var(--danger); margin-bottom: 1rem;">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </div>
+    <h1 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem;">
+      {{#if status}}{{status}} — {{/if}}An Error Occurred
+    </h1>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+      {{#if error}}{{error}}{{else}}We encountered an unexpected problem processing your request.{{/if}}
+    </p>
+
+    <div style="display: flex; gap: 0.75rem; justify-content: center;">
+      <a href="/" class="btn btn-primary">
+        <i class="fa-solid fa-house"></i> Return Home
+      </a>
+      <button onclick="window.history.back()" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i> Go Back
+      </button>
+    </div>
+  </div>
+</div>

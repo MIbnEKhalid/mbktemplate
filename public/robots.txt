@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemap locations
-Sitemap: https://blog.mbktechstudio.com/sitemap.xml

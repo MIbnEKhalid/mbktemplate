@@ -1,0 +1,95 @@
+<div class="app-container">
+  
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+        <span class="badge badge-primary"><i class="fa-solid fa-shield-halved"></i> Administrator Privileges Active</span>
+      </div>
+      <h1 style="font-size: 1.75rem; font-weight: 700;">Administration & Control Center</h1>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        Protected by <code>sessPerm(Permissions.admin.view)</code>.
+      </p>
+    </div>
+    <div>
+      <a href="/dashboard" class="btn btn-secondary btn-sm">
+        <i class="fa-solid fa-gauge"></i> User Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- System Health Cards -->
+  <div class="grid-4" style="margin-bottom: 2rem;">
+    <div class="stat-card">
+      <span class="stat-label"><i class="fa-solid fa-server"></i> Platform Health</span>
+      <span class="stat-value" style="font-size: 1.25rem; color: var(--success);">OPTIMAL</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label"><i class="fa-solid fa-box-archive"></i> Total Entities</span>
+      <span class="stat-value">{{stats.totalItems}}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label"><i class="fa-solid fa-user-shield"></i> Active Admin User</span>
+      <span class="stat-value" style="font-size: 1.15rem;">{{userContext.username}}</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label"><i class="fa-solid fa-microchip"></i> Engine Memory</span>
+      <span class="stat-value" style="font-size: 1.15rem;">Node {{stats.nodeVersion}}</span>
+    </div>
+  </div>
+
+  <!-- Permission Surface Inspector -->
+  <div class="card" style="margin-bottom: 2rem;">
+    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">
+      <i class="fa-solid fa-key" style="color: var(--warning);"></i> Active Permission Manifest
+    </h3>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+      Configured via <code>src/permissions.js</code> using <code>definePermissions</code> and synchronized to the central catalog.
+    </p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Permission Action</th>
+            <th>Description</th>
+            <th>Required By</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>items</code></td>
+            <td><code>items:read</code></td>
+            <td>Read and list items</td>
+            <td>Dashboard, List API</td>
+          </tr>
+          <tr>
+            <td><code>items</code></td>
+            <td><code>items:create</code></td>
+            <td>Create new items</td>
+            <td>Create Item API</td>
+          </tr>
+          <tr>
+            <td><code>items</code></td>
+            <td><code>items:delete</code></td>
+            <td>Delete items</td>
+            <td>Delete Item API</td>
+          </tr>
+          <tr>
+            <td><code>admin</code></td>
+            <td><code>admin:view</code></td>
+            <td>Access administrative area</td>
+            <td>Admin Dashboard</td>
+          </tr>
+          <tr>
+            <td><code>admin</code></td>
+            <td><code>admin:manage</code></td>
+            <td>Manage application settings and users</td>
+            <td>Admin Metrics & Control APIs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

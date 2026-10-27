@@ -1,0 +1,114 @@
+<div class="app-container">
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+      <span class="badge badge-primary">MBKTech Ecosystem Starter</span>
+      <span class="badge badge-neutral">Node.js ES Modules</span>
+    </div>
+    <h1 class="hero-title">
+      Build Scalable Apps with <span class="brand-title">{{appName}}</span>
+    </h1>
+    <p class="hero-subtitle">
+      Preconfigured with centralized authentication (<code>mbkauthe</code>), shared formatters and view engines (<code>mbkutils</code>), dual SQLite & PostgreSQL persistence, and automatic permission syncing.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="/dashboard" class="btn btn-primary">
+        <i class="fa-solid fa-gauge"></i> Open Dashboard
+      </a>
+      <a href="/admin" class="btn btn-secondary">
+        <i class="fa-solid fa-shield-halved"></i> Admin Panel
+      </a>
+      <a href="/api/health" target="_blank" class="btn btn-ghost">
+        <i class="fa-solid fa-heart-pulse"></i> Check Health API
+      </a>
+    </div>
+  </section>
+
+  <!-- Live Health & Metric Stats -->
+  <section style="margin-bottom: 3rem;">
+    <div class="grid-4">
+      <div class="stat-card">
+        <span class="stat-label"><i class="fa-solid fa-circle-check" style="color: var(--success);"></i> System Status</span>
+        <span class="stat-value" style="font-size: 1.25rem; text-transform: uppercase;">{{stats.systemStatus}}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label"><i class="fa-solid fa-database"></i> Stored Items</span>
+        <span class="stat-value">{{stats.totalItems}}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label"><i class="fa-brands fa-node-js"></i> Node Runtime</span>
+        <span class="stat-value" style="font-size: 1.25rem;">{{stats.nodeVersion}}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label"><i class="fa-solid fa-clock"></i> Server Uptime</span>
+        <span class="stat-value" style="font-size: 1.25rem;">{{stats.uptime}}s</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture & Included Features Grid -->
+  <section style="margin-bottom: 3rem;">
+    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
+      Built-In Architecture
+    </h2>
+
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem;">Authentication & RBAC</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Native <code>mbkauthe</code> integration with session storage, 2FA, OAuth providers, CSRF defense, and declarative route permission gates (<code>sessPerm</code>).
+        </p>
+      </div>
+
+      <div class="card">
+        <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-database"></i>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem;">Dual Database Engine</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Zero-config local development using fast SQLite (<code>better-sqlite3</code>) and seamless production scaling using PostgreSQL / Neon.
+        </p>
+      </div>
+
+      <div class="card">
+        <div style="font-size: 1.5rem; color: var(--success); margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem;">Catalog Auto-Sync</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Contains <code>scripts/sync_permissions.js</code> which automatically links with the root <code>init.mjs</code> orchestrator to sync permissions across all apps.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start Commands Section -->
+  <section class="card" style="margin-bottom: 2rem;">
+    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;">
+      <i class="fa-solid fa-terminal" style="margin-right: 0.5rem; color: var(--primary);"></i> Quick Developer Commands
+    </h3>
+    <div class="code-block">
+# 1. Install dependencies
+npm install
+
+# 2. Initialize database schema (SQLite or PostgreSQL)
+npm run db:init:sqlite
+# or: npm run db:init:postgres
+
+# 3. Synchronize declared permissions with mbkauthe catalog
+npm run sync_permissions
+
+# 4. Start local development server with file watch
+npm run dev
+
+# 5. Run test suite
+npm test
+    </div>
+  </section>
+
+</div>
