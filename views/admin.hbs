@@ -2,90 +2,178 @@
   
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
     <div>
-      <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-        <span class="badge badge-primary"><i class="fa-solid fa-shield-halved"></i> Administrator Privileges Active</span>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+        <span class="badge badge-accent"><i class="lni lni-shield"></i> Superadmin Privileges</span>
       </div>
-      <h1 style="font-size: 1.75rem; font-weight: 700;">Administration & Control Center</h1>
+      <h1 style="font-size: 1.85rem; font-weight: 700;">Administration &amp; Control Center</h1>
       <p style="color: var(--text-muted); font-size: 0.9rem;">
-        Protected by <code>sessPerm(Permissions.admin.view)</code>.
+        Governed by <code>sessPerm(Permissions.admin.view)</code> and central RBAC policies.
       </p>
     </div>
     <div>
       <a href="/dashboard" class="btn btn-secondary btn-sm">
-        <i class="fa-solid fa-gauge"></i> User Dashboard
+        <i class="lni lni-grid-alt"></i> User Dashboard
       </a>
     </div>
   </div>
 
   <!-- System Health Cards -->
-  <div class="grid-4" style="margin-bottom: 2rem;">
+  <div class="grid-4" style="margin-bottom: 2.5rem;">
     <div class="stat-card">
-      <span class="stat-label"><i class="fa-solid fa-server"></i> Platform Health</span>
-      <span class="stat-value" style="font-size: 1.25rem; color: var(--success);">OPTIMAL</span>
+      <span class="stat-label"><i class="lni lni-pulse" style="color: var(--color-success);"></i> Platform Health</span>
+      <span class="stat-value" style="font-size: 1.25rem; color: var(--color-success);">OPTIMAL</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label"><i class="fa-solid fa-box-archive"></i> Total Entities</span>
+      <span class="stat-label"><i class="lni lni-database" style="color: var(--color-primary);"></i> Total Entities</span>
       <span class="stat-value">{{stats.totalItems}}</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label"><i class="fa-solid fa-user-shield"></i> Active Admin User</span>
-      <span class="stat-value" style="font-size: 1.15rem;">{{userContext.username}}</span>
+      <span class="stat-label"><i class="lni lni-user" style="color: var(--color-accent);"></i> Administrator</span>
+      <span class="stat-value" style="font-size: 1.25rem;">{{userContext.username}}</span>
     </div>
     <div class="stat-card">
-      <span class="stat-label"><i class="fa-solid fa-microchip"></i> Engine Memory</span>
-      <span class="stat-value" style="font-size: 1.15rem;">Node {{stats.nodeVersion}}</span>
+      <span class="stat-label"><i class="fa-brands fa-node-js" style="color: #22c55e;"></i> Engine Memory</span>
+      <span class="stat-value" style="font-size: 1.25rem;">Node {{stats.nodeVersion}}</span>
+    </div>
+  </div>
+
+  <!-- Ecosystem Management Tools -->
+  <div style="margin-bottom: 2.5rem;">
+    <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 1rem;">
+      Integrated Consoles
+    </h2>
+
+    <div class="grid-2">
+      <!-- AdminDB Card -->
+      <div class="card card-interactive" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 1.35rem;">
+              <i class="lni lni-database"></i>
+            </div>
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0;">Database Console</h3>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">admindb v2.6+</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            Interactive database browser and SQL query studio. Browse tables, inspect schemas, and manage records directly in the browser.
+          </p>
+        </div>
+        <div>
+          <a href="/admin/db" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            <i class="lni lni-arrow-right"></i> Open Database Console
+          </a>
+        </div>
+      </div>
+
+      <!-- MBKBucket Card -->
+      <div class="card card-interactive" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;">
+            <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.12); display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.35rem;">
+              <i class="lni lni-archive"></i>
+            </div>
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0;">Object Storage</h3>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">mbkbucket v4.4+</span>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem;">
+            Unified object storage explorer. Upload, manage, stream, and preview files and assets across local disk, Cloudflare R2, AWS S3, or Google Drive.
+          </p>
+        </div>
+        <div>
+          <a href="/mbkbucket" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            <i class="lni lni-arrow-right"></i> Open Storage Manager
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Permission Surface Inspector -->
-  <div class="card" style="margin-bottom: 2rem;">
-    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">
-      <i class="fa-solid fa-key" style="color: var(--warning);"></i> Active Permission Manifest
-    </h3>
-    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
-      Configured via <code>src/permissions.js</code> using <code>definePermissions</code> and synchronized to the central catalog.
+  <div class="card" style="margin-bottom: 2.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 700;">
+        <i class="lni lni-key" style="color: var(--color-accent); margin-right: 0.25rem;"></i> Active Permission Manifest
+      </h3>
+      <span class="badge badge-primary">Catalog Synchronized</span>
+    </div>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">
+      Declared in <code>src/permissions.js</code> via <code>definePermissions</code> and synchronized with the ecosystem catalog.
     </p>
 
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
-            <th>Feature</th>
-            <th>Permission Action</th>
+            <th>Module</th>
+            <th>Permission Key</th>
             <th>Description</th>
-            <th>Required By</th>
+            <th>Guards Route / Action</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><code>items</code></td>
+            <td><span class="badge badge-neutral">items</span></td>
             <td><code>items:read</code></td>
             <td>Read and list items</td>
-            <td>Dashboard, List API</td>
+            <td>User Dashboard, List API</td>
           </tr>
           <tr>
-            <td><code>items</code></td>
+            <td><span class="badge badge-neutral">items</span></td>
             <td><code>items:create</code></td>
             <td>Create new items</td>
             <td>Create Item API</td>
           </tr>
           <tr>
-            <td><code>items</code></td>
+            <td><span class="badge badge-neutral">items</span></td>
+            <td><code>items:edit</code></td>
+            <td>Edit existing items</td>
+            <td>Update Item API</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-neutral">items</span></td>
             <td><code>items:delete</code></td>
             <td>Delete items</td>
             <td>Delete Item API</td>
           </tr>
           <tr>
-            <td><code>admin</code></td>
+            <td><span class="badge badge-primary">admin</span></td>
             <td><code>admin:view</code></td>
             <td>Access administrative area</td>
-            <td>Admin Dashboard</td>
+            <td>Admin Control Center (/admin)</td>
           </tr>
           <tr>
-            <td><code>admin</code></td>
+            <td><span class="badge badge-primary">admin</span></td>
             <td><code>admin:manage</code></td>
             <td>Manage application settings and users</td>
-            <td>Admin Metrics & Control APIs</td>
+            <td>Admin Metrics &amp; Control APIs</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-success">storage</span></td>
+            <td><code>storage:view</code></td>
+            <td>View and download bucket files</td>
+            <td>MBKBucket Dashboard (/mbkbucket)</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-success">storage</span></td>
+            <td><code>storage:upload</code></td>
+            <td>Upload bucket files</td>
+            <td>MBKBucket Upload API</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-success">storage</span></td>
+            <td><code>storage:delete</code></td>
+            <td>Delete bucket files</td>
+            <td>MBKBucket Delete API</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-accent">admindb</span></td>
+            <td><code>admindb:access</code></td>
+            <td>Access database management console</td>
+            <td>AdminDB Browser UI (/admin/db)</td>
           </tr>
         </tbody>
       </table>

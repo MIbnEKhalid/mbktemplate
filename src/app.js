@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
@@ -55,6 +56,21 @@ app.use(
 
 // 8. Response latency tracking
 app.use(responseTimeMiddleware);
+
+// Global view locals for cache busting and application metadata
+let appVersion = '1.0.0';
+try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf8'));
+    if (pkg.version) appVersion = pkg.version;
+} catch {}
+
+app.use((req, res, next) => {
+    res.locals.appVersion = appVersion;
+    res.locals.cacheBust = `?v=${appVersion}`;
+    res.locals.cachebust = `?v=${appVersion}`;
+    res.locals.currentUrl = req.originalUrl || req.url || '';
+    next();
+});
 
 // 9. Mount application routes
 app.use(routes);

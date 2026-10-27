@@ -8,6 +8,39 @@ describe("MBKTemplate Application Tests", () => {
     expect(Permissions).toBeDefined();
     expect(Permissions.items).toBeDefined();
     expect(Permissions.admin).toBeDefined();
+    expect(Permissions.storage).toBeDefined();
+    expect(Permissions.storage.view).toBeDefined();
+    expect(Permissions.storage.upload).toBeDefined();
+    expect(Permissions.storage.delete).toBeDefined();
+    expect(Permissions.admindb).toBeDefined();
+    expect(Permissions.admindb.access).toBeDefined();
+  });
+
+  test("Storage client service exports all expected storage methods", async () => {
+    const storageModule = await import("../src/services/storage.service.js");
+    expect(storageModule.storageService).toBeDefined();
+    expect(typeof storageModule.storageService.upload).toBe("function");
+    expect(typeof storageModule.storageService.download).toBe("function");
+    expect(typeof storageModule.storageService.delete).toBe("function");
+    expect(typeof storageModule.storageService.list).toBe("function");
+    expect(typeof storageModule.uploadFile).toBe("function");
+    expect(typeof storageModule.downloadFile).toBe("function");
+  });
+
+  test("GET /mbkbucket is registered and reachable", async () => {
+    const res = await request(app)
+      .get("/mbkbucket")
+      .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+    // Should respond (redirect to login or render bucket dashboard)
+    expect([200, 302, 401, 403]).toContain(res.status);
+  });
+
+  test("GET /admin/db is registered and reachable", async () => {
+    const res = await request(app)
+      .get("/admin/db")
+      .set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+    // Should respond (redirect to trailing slash 301, redirect to login 302, or render)
+    expect([200, 301, 302, 401, 403]).toContain(res.status);
   });
 
   test("GET / renders the landing page", async () => {

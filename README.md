@@ -13,8 +13,18 @@ Designed for instant developer onboarding, zero configuration overhead, high sec
   - Preconfigured session management, CSRF mitigation, and security cookies.
   - Granular RBAC permission guards with `sessPerm(...)`.
   - Automatic synchronization with the central ecosystem catalog via `npm run sync_permissions`.
+- **Visual Database Administration (`admindb`)**:
+  - Embedded browser-based database management UI mounted at `/admin/db`.
+  - Full table browsing, schema introspection, and raw query runner.
+  - Seamless dual-mode support for both local SQLite (`better-sqlite3`) and PostgreSQL.
+  - Protected behind `sessPerm(Permissions.admindb.access)`.
+- **Object & File Storage (`mbkbucket`)**:
+  - Preconfigured storage router mounted at `/mbkbucket` (dashboard, upload, preview, stream).
+  - Multi-provider support (Local Disk, Cloudflare R2, AWS S3, Google Drive).
+  - Protected with granular permissions: `storage:view`, `storage:upload`, and `storage:delete`.
+  - Ready-to-use programmatic client abstraction via `src/services/storage.service.js`.
 - **Ecosystem Utilities (`mbkutils`)**:
-  - Unified view engine integrating both app views and `mbkauthe` auth pages.
+  - Unified view engine integrating app views, `mbkauthe` auth pages, and `mbkbucket` templates.
   - Standardized JSON responses (`sendSuccess`, `sendError`) and Handlebars rendering (`renderPage`).
   - Rate limiting with `createRateLimiter` and unified 404/error handling.
 - **Dual Database Architecture (SQLite & PostgreSQL)**:
@@ -48,8 +58,9 @@ Designed for instant developer onboarding, zero configuration overhead, high sec
 │   ├── permissions.js        # RBAC and permission manifest declaration
 │   ├── config/
 │   │   ├── env.js            # Dotenv and runtime configurations
-│   │   └── view-engine.js    # Multi-engine Handlebars setup
+│   │   └── view-engine.js    # Multi-engine Handlebars setup (mbkauthe + mbkbucket + mbkutils)
 │   ├── db/
+│   │   ├── admindb.js        # AdminDB router factory (SQLite & PostgreSQL)
 │   │   ├── connection.js     # Pool and connection test helpers
 │   │   ├── index.js          # Database adapter export
 │   │   └── schema/
@@ -70,18 +81,19 @@ Designed for instant developer onboarding, zero configuration overhead, high sec
 │   ├── repositories/         # Database persistence queries
 │   │   └── item.repository.js# BaseRepository implementation
 │   ├── routes/               # Modular Express routing
-│   │   ├── index.js          # Route hub (mounts mbkauthe + sub-routers)
+│   │   ├── index.js          # Route hub (mounts mbkauthe + mbkbucket + sub-routers)
 │   │   ├── web.routes.js     # Public and protected web pages
 │   │   ├── api.routes.js     # REST endpoints
-│   │   └── admin.routes.js   # Admin routes with sessPerm
+│   │   └── admin.routes.js   # Admin routes with sessPerm & AdminDB UI (/admin/db)
 │   └── services/             # Business logic layer
-│       └── item.service.js
+│       ├── item.service.js
+│       └── storage.service.js# Object storage client abstraction (mbkbucket)
 ├── views/                    # Handlebars templates
 │   ├── layouts/
-│   │   └── layout.hbs        # Master layout with theme and auth badge
+│   │   └── layout.hbs        # Master layout with theme, storage & db links, auth badge
 │   ├── index.hbs             # Landing page
 │   ├── dashboard.hbs         # Authenticated dashboard
-│   ├── admin.hbs             # Protected admin panel
+│   ├── admin.hbs             # Protected admin panel with AdminDB & MBKBucket quick launch
 │   └── error.hbs             # Standard error view
 ├── public/                   # Static public assets
 │   ├── assets/css/style.css  # Core design system
@@ -142,17 +154,31 @@ const MANIFEST = {
   items: {
     create: "Create new items",
     read: "Read and list items",
+    edit: "Edit existing items",
     delete: "Delete items",
   },
   admin: {
     view: "Access administrative area",
+    manage: "Manage application settings and users",
+  },
+  storage: {
+    view: "View and download bucket files",
+    upload: "Upload bucket files",
+    delete: "Delete bucket files",
+  },
+  admindb: {
+    access: "Access database management console",
   },
 };
 
 const ROLES = {
   admin: {
-    label: "Administrator",
-    permissions: ["items:*", "admin:*"],
+    label: "Application Administrator",
+    permissions: ["items:*", "admin:*", "storage:*", "admindb:*"],
+  },
+  normaluser: {
+    label: "Standard User",
+    permissions: ["items:read", "items:create", "storage:view"],
   },
 };
 

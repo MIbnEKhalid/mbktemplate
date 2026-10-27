@@ -2,111 +2,161 @@
   
   <!-- Hero Section -->
   <section class="hero">
-    <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
-      <span class="badge badge-primary">MBKTech Ecosystem Starter</span>
-      <span class="badge badge-neutral">Node.js ES Modules</span>
+    <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+      <span class="badge badge-primary"><i class="lni lni-bolt"></i> MBKTech Starter Template</span>
+      <span class="badge badge-neutral"><i class="lni lni-code"></i> Node.js ES Modules</span>
     </div>
+    
     <h1 class="hero-title">
-      Build Scalable Apps with <span class="brand-title">{{appName}}</span>
+      Architect Modern Services with <span class="brand-highlight">{{appName}}</span>
     </h1>
+    
     <p class="hero-subtitle">
-      Preconfigured with centralized authentication (<code>mbkauthe</code>), shared formatters and view engines (<code>mbkutils</code>), dual SQLite & PostgreSQL persistence, and automatic permission syncing.
+      Preconfigured with centralized authentication (<code>mbkauthe</code>), visual database management (<code>admindb</code>), cloud & local object storage (<code>mbkbucket</code>), and ecosystem utilities (<code>mbkutils</code>).
     </p>
 
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a href="/dashboard" class="btn btn-primary">
-        <i class="fa-solid fa-gauge"></i> Open Dashboard
+    <div class="hero-btn-group">
+      <a href="/dashboard" class="btn btn-primary btn-lg">
+        <i class="lni lni-grid-alt"></i> Open Dashboard
       </a>
-      <a href="/admin" class="btn btn-secondary">
-        <i class="fa-solid fa-shield-halved"></i> Admin Panel
+      <a href="/admin" class="btn btn-secondary btn-lg">
+        <i class="lni lni-shield"></i> Admin Control Center
       </a>
-      <a href="/api/health" target="_blank" class="btn btn-ghost">
-        <i class="fa-solid fa-heart-pulse"></i> Check Health API
+      <a href="/mbkbucket" class="btn btn-secondary btn-lg">
+        <i class="lni lni-archive"></i> Storage
+      </a>
+      <a href="/admin/db" class="btn btn-secondary btn-lg">
+        <i class="lni lni-database"></i> Database
       </a>
     </div>
   </section>
 
   <!-- Live Health & Metric Stats -->
-  <section style="margin-bottom: 3rem;">
+  <section style="margin-bottom: 3.5rem;">
     <div class="grid-4">
       <div class="stat-card">
-        <span class="stat-label"><i class="fa-solid fa-circle-check" style="color: var(--success);"></i> System Status</span>
-        <span class="stat-value" style="font-size: 1.25rem; text-transform: uppercase;">{{stats.systemStatus}}</span>
+        <span class="stat-label"><i class="lni lni-checkmark-circle" style="color: var(--color-success);"></i> System Status</span>
+        <span class="stat-value" style="color: var(--color-success); font-size: 1.35rem;">{{stats.systemStatus}}</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label"><i class="fa-solid fa-database"></i> Stored Items</span>
+        <span class="stat-label"><i class="lni lni-layers" style="color: var(--color-primary);"></i> Stored Items</span>
         <span class="stat-value">{{stats.totalItems}}</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label"><i class="fa-brands fa-node-js"></i> Node Runtime</span>
-        <span class="stat-value" style="font-size: 1.25rem;">{{stats.nodeVersion}}</span>
+        <span class="stat-label"><i class="fa-brands fa-node-js" style="color: #22c55e;"></i> Node Engine</span>
+        <span class="stat-value" style="font-size: 1.35rem;">{{stats.nodeVersion}}</span>
       </div>
       <div class="stat-card">
-        <span class="stat-label"><i class="fa-solid fa-clock"></i> Server Uptime</span>
-        <span class="stat-value" style="font-size: 1.25rem;">{{stats.uptime}}s</span>
+        <span class="stat-label"><i class="lni lni-timer" style="color: var(--color-accent);"></i> Server Uptime</span>
+        <span class="stat-value" style="font-size: 1.35rem;">{{stats.uptime}}s</span>
       </div>
     </div>
   </section>
 
-  <!-- Architecture & Included Features Grid -->
-  <section style="margin-bottom: 3rem;">
-    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;">
-      Built-In Architecture
-    </h2>
+  <!-- Architecture & Included Ecosystem Features Grid -->
+  <section style="margin-bottom: 3.5rem;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">
+        Integrated Ecosystem Stack
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">
+        Engineered for rapid production deployment across the MBKTech network.
+      </p>
+    </div>
 
     <div class="grid-3">
-      <div class="card">
-        <div style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.75rem;">
-          <i class="fa-solid fa-lock"></i>
+      <!-- mbkauthe -->
+      <div class="card card-interactive">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(13, 148, 136, 0.12); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1rem;">
+          <i class="lni lni-shield"></i>
         </div>
-        <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem;">Authentication & RBAC</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-          Native <code>mbkauthe</code> integration with session storage, 2FA, OAuth providers, CSRF defense, and declarative route permission gates (<code>sessPerm</code>).
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Authentication & RBAC</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+          Native <code>mbkauthe</code> integration with session storage, 2FA, OAuth providers, CSRF defense, and declarative route gates via <code>sessPerm(...)</code>.
         </p>
       </div>
 
-      <div class="card">
-        <div style="font-size: 1.5rem; color: var(--accent); margin-bottom: 0.75rem;">
-          <i class="fa-solid fa-database"></i>
+      <!-- admindb -->
+      <div class="card card-interactive">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(59, 130, 246, 0.12); display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 1.35rem; margin-bottom: 1rem;">
+          <i class="lni lni-database"></i>
         </div>
-        <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem;">Dual Database Engine</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-          Zero-config local development using fast SQLite (<code>better-sqlite3</code>) and seamless production scaling using PostgreSQL / Neon.
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Visual Database Console</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+          Embedded <code>admindb</code> interface under <code>/admin/db</code>. Visual table browser, schema viewer, and raw query runner supporting both SQLite and PostgreSQL.
         </p>
       </div>
 
-      <div class="card">
-        <div style="font-size: 1.5rem; color: var(--success); margin-bottom: 0.75rem;">
-          <i class="fa-solid fa-arrows-rotate"></i>
+      <!-- mbkbucket -->
+      <div class="card card-interactive">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.12); display: flex; align-items: center; justify-content: center; color: #10b981; font-size: 1.35rem; margin-bottom: 1rem;">
+          <i class="lni lni-archive"></i>
         </div>
-        <h3 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem;">Catalog Auto-Sync</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">
-          Contains <code>scripts/sync_permissions.js</code> which automatically links with the root <code>init.mjs</code> orchestrator to sync permissions across all apps.
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Cloud & Local Storage</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+          Built-in <code>mbkbucket</code> service with web dashboard under <code>/mbkbucket</code>, upload/streaming API, and unified client abstraction for S3, Cloudflare R2, or disk.
+        </p>
+      </div>
+
+      <!-- mbkutils -->
+      <div class="card card-interactive">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(249, 115, 22, 0.12); display: flex; align-items: center; justify-content: center; color: #f97316; font-size: 1.35rem; margin-bottom: 1rem;">
+          <i class="lni lni-cog"></i>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Unified Utilities</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+          Standardized JSON envelopes (<code>sendSuccess</code>, <code>sendError</code>), multi-package Handlebars view engine, rate limiting, and centralized error handling via <code>mbkutils</code>.
+        </p>
+      </div>
+
+      <!-- Dual DB -->
+      <div class="card card-interactive">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(168, 85, 247, 0.12); display: flex; align-items: center; justify-content: center; color: #a855f7; font-size: 1.35rem; margin-bottom: 1rem;">
+          <i class="lni lni-harddrive"></i>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Dual Persistence Architecture</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+          Zero-configuration local development using ultra-fast embedded SQLite (<code>better-sqlite3</code>) and zero-friction production scaling to PostgreSQL (Neon / Supabase).
+        </p>
+      </div>
+
+      <!-- Catalog Auto Sync -->
+      <div class="card card-interactive">
+        <div style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(20, 184, 166, 0.12); display: flex; align-items: center; justify-content: center; color: var(--color-primary); font-size: 1.35rem; margin-bottom: 1rem;">
+          <i class="lni lni-reload"></i>
+        </div>
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Catalog Auto-Sync</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+          Declarative permission manifests in <code>src/permissions.js</code> automatically register with the central catalog via <code>npm run sync_permissions</code> and root <code>init.mjs</code>.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Quick Start Commands Section -->
-  <section class="card" style="margin-bottom: 2rem;">
-    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;">
-      <i class="fa-solid fa-terminal" style="margin-right: 0.5rem; color: var(--primary);"></i> Quick Developer Commands
-    </h3>
+  <!-- Quick Developer Commands -->
+  <section class="card" style="margin-bottom: 2.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+      <h3 style="font-size: 1.15rem; font-weight: 700;">
+        <i class="lni lni-terminal" style="color: var(--color-primary); margin-right: 0.35rem;"></i> Essential Developer Workflows
+      </h3>
+      <span class="badge badge-primary">Node 18+ / 20+ / 24+</span>
+    </div>
+    
     <div class="code-block">
-# 1. Install dependencies
+# 1. Install ecosystem dependencies
 npm install
 
-# 2. Initialize database schema (SQLite or PostgreSQL)
+# 2. Initialize database schema (SQLite by default, or PostgreSQL)
 npm run db:init:sqlite
 # or: npm run db:init:postgres
 
-# 3. Synchronize declared permissions with mbkauthe catalog
+# 3. Synchronize declared RBAC permissions with the central catalog
 npm run sync_permissions
 
 # 4. Start local development server with file watch
 npm run dev
 
-# 5. Run test suite
+# 5. Run test suite with Vitest
 npm test
     </div>
   </section>

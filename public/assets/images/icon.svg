@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
   <defs>
     <linearGradient id="mbkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#4f46e5" />
-      <stop offset="50%" stop-color="#7c3aed" />
-      <stop offset="100%" stop-color="#06b6d4" />
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="50%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#14b8a6" />
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
   <rect width="90" height="90" x="5" y="5" rx="20" fill="url(#mbkGrad)" />
   <path d="M26 68 L26 32 L40 52 L54 32 L54 68" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="70" cy="40" r="5" fill="#38bdf8" filter="url(#glow)" />
-  <circle cx="70" cy="60" r="5" fill="#a78bfa" filter="url(#glow)" />
+  <circle cx="70" cy="40" r="5" fill="#5eead4" filter="url(#glow)" />
+  <circle cx="70" cy="60" r="5" fill="#2dd4bf" filter="url(#glow)" />
 </svg>

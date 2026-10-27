@@ -1,61 +1,161 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="description" content="{{#if description}}{{description}}{{else}}{{appName}} — Built on the MBKTech Node.js ecosystem.{{/if}}">
-  <title>{{title}}</title>
+  <meta name="keywords" content="MBKTech, MBKTech.org, mbkauthe, mbkbucket, admindb, mbkutils, Node.js">
+  <meta name="author" content="Muhammad Bin Khalid (MBKTech)">
+  <title>{{#if title}}{{title}}{{else}}{{appName}} | MBKTech Studio{{/if}}</title>
   
-  <link rel="icon" type="image/svg+xml" href="/assets/images/icon.svg">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/assets/css/style.css">
-  
-  <script src="/assets/js/theme.js"></script>
+  <link rel="icon" type="image/svg+xml" href="/assets/images/icon.svg{{{cacheBust}}}">
+
+  <!-- Google Fonts: Sora (Headings), IBM Plex Sans (Body), JetBrains Mono (Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons: LineIcons 4.0 + Font Awesome 6.5 -->
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Core MBKTech Design System CSS with Cachebusting -->
+  <link rel="stylesheet" href="/assets/css/style.css{{{cacheBust}}}">
+
+  <!-- Instant Theme Script to avoid FOUC -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("mbk-theme");
+        var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) {
+          document.documentElement.classList.add("dark");
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script src="/assets/js/theme.js{{{cacheBust}}}" defer></script>
 </head>
 <body class="{{#if isAdmin}}admin-body{{/if}}">
 
   {{#unless hideNav}}
-  <!-- Global Navigation Header -->
+  <!-- Glassmorphic Header with Responsive Mobile Navigation -->
   <header class="navbar">
     <div class="app-container">
       <div class="nav-wrapper">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <a href="/" class="brand-logo">
-            <img src="/assets/images/icon.svg" alt="Logo" class="brand-icon">
-            <div class="brand-logo-content">
-              <span class="brand-title">{{appName}}</span>
-              <span class="brand-subtitle">MBKTech Ecosystem</span>
-            </div>
-          </a>
-          {{#if isAdmin}}
-            <span class="badge badge-primary">Admin Area</span>
-          {{/if}}
-        </div>
+        
+        <!-- Brand Logo -->
+        <a href="/" class="brand-logo" aria-label="Home">
+          <img src="/assets/images/icon.svg{{{cacheBust}}}" alt="MBKTech Logo" class="brand-icon">
+          <div class="brand-logo-content">
+            <span class="brand-title">
+              {{appName}}
+            </span>
+            <span class="brand-subtitle">MBKTech Ecosystem</span>
+          </div>
+        </a>
 
-        <nav class="nav-links">
-          <a href="/" class="btn-ghost btn-sm">Home</a>
-          <a href="/dashboard" class="btn-ghost btn-sm">Dashboard</a>
-          <a href="/admin" class="btn-ghost btn-sm">Admin</a>
-          <a href="/api/health" class="btn-ghost btn-sm" target="_blank">Health API</a>
+        <!-- Desktop Navigation Links -->
+        <nav class="nav-links desktop-nav" aria-label="Main Navigation">
+          <a data-nav href="/" class="nav-link"><i class="lni lni-home"></i> Home</a>
+          <a data-nav href="/dashboard" class="nav-link"><i class="lni lni-grid-alt"></i> Dashboard</a>
+          <a data-nav href="/admin" class="nav-link"><i class="lni lni-shield"></i> Admin</a>
+          <a data-nav href="/mbkbucket" class="nav-link"><i class="lni lni-archive"></i> Storage</a>
+          <a data-nav href="/admin/db" class="nav-link"><i class="lni lni-database"></i> Database</a>
+          <a href="/api/health" class="nav-link" target="_blank"><i class="lni lni-pulse"></i> Health API</a>
         </nav>
 
+        <!-- Right Header Actions (Theme Switcher, Auth, Mobile Hamburger) -->
         <div class="nav-actions">
-          <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
-            <i class="fa-solid fa-moon"></i>
+          <!-- Theme Toggle -->
+          <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode">
+            <i class="lni lni-night"></i>
+            <i class="lni lni-sun hidden" style="color: #fbbf24;"></i>
           </button>
           
+          <!-- Desktop Auth Buttons -->
+          <div class="desktop-auth">
+            {{#if userContext.userLoggedIn}}
+              <span class="badge badge-success" title="Role: {{userContext.role}}">
+                <i class="lni lni-user"></i> {{userContext.username}}
+              </span>
+              <a href="/mbkauthe/logout" class="btn btn-secondary btn-sm" title="Sign Out">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+              </a>
+            {{else}}
+              <a href="/mbkauthe/login" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                <span>Sign In</span>
+              </a>
+            {{/if}}
+          </div>
+
+          <!-- Mobile Menu Hamburger Button -->
+          <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileDrawer">
+            <i class="lni lni-menu" id="hamburgerIcon"></i>
+            <i class="lni lni-close hidden" id="closeIcon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="app-container">
+        <nav class="mobile-nav-list" aria-label="Mobile Navigation">
+          <a data-nav href="/" class="mobile-nav-link">
+            <i class="lni lni-home"></i>
+            <span>Home</span>
+          </a>
+          <a data-nav href="/dashboard" class="mobile-nav-link">
+            <i class="lni lni-grid-alt"></i>
+            <span>Dashboard</span>
+          </a>
+          <a data-nav href="/admin" class="mobile-nav-link">
+            <i class="lni lni-shield"></i>
+            <span>Admin Area</span>
+          </a>
+          <a data-nav href="/mbkbucket" class="mobile-nav-link">
+            <i class="lni lni-archive"></i>
+            <span>Object Storage (MBKBucket)</span>
+            <span class="badge badge-success" style="margin-left: auto; font-size: 0.65rem;">Storage</span>
+          </a>
+          <a data-nav href="/admin/db" class="mobile-nav-link">
+            <i class="lni lni-database"></i>
+            <span>Database Console (AdminDB)</span>
+            <span class="badge badge-primary" style="margin-left: auto; font-size: 0.65rem;">Console</span>
+          </a>
+          <a href="/api/health" class="mobile-nav-link" target="_blank">
+            <i class="lni lni-pulse"></i>
+            <span>Health Status API</span>
+          </a>
+        </nav>
+
+        <!-- Mobile User Area -->
+        <div class="mobile-auth-section">
           {{#if userContext.userLoggedIn}}
-            <span class="badge badge-success" title="Role: {{userContext.role}}">
-              <i class="fa-solid fa-user-check" style="margin-right: 4px;"></i> {{userContext.username}}
-            </span>
-            <a href="/mbkauthe/logout" class="btn btn-secondary btn-sm" title="Sign Out">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <span>Logout</span>
-            </a>
+            <div class="mobile-user-card">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <div class="mobile-user-avatar">
+                  <i class="lni lni-user"></i>
+                </div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.9rem;">{{userContext.username}}</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Role: {{userContext.role}}</div>
+                </div>
+              </div>
+              <a href="/mbkauthe/logout" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; margin-top: 0.75rem;">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+              </a>
+            </div>
           {{else}}
-            <a href="/mbkauthe/login" class="btn btn-primary btn-sm">
-              <i class="fa-solid fa-arrow-right-to-bracket"></i>
-              <span>Sign In</span>
+            <a href="/mbkauthe/login" class="btn btn-primary" style="width: 100%; justify-content: center; height: 44px;">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account
             </a>
           {{/if}}
         </div>
@@ -65,28 +165,133 @@
   {{/unless}}
 
   <!-- Main Body Content -->
-  <main style="flex: 1; padding: 2rem 0;">
+  <main class="main-content">
     {{{body}}}
   </main>
 
-  <!-- Global Footer -->
+  <!-- Global Footer Aligned with mbktech.org -->
   <footer class="app-footer">
     <div class="app-container">
-      <div class="footer-content">
-        <div>
-          <strong>{{appName}}</strong> &copy; {{currentYear}} MBKTech.org. All rights reserved.
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <img src="/assets/images/icon.svg{{{cacheBust}}}" alt="MBKTech" style="width: 32px; height: 32px; border-radius: 6px;">
+            <span class="brand-title" style="color: #ffffff; font-size: 1.35rem;">
+              BK<span style="color: #2dd4bf;">Tech</span>
+            </span>
+          </div>
+          <p style="color: #94a3b8; font-size: 0.85rem; line-height: 1.6; max-width: 440px;">
+            A collaborative open-source technology studio and software solutions platform empowering developers and builders worldwide.
+          </p>
+          <div class="social-links">
+            <a href="https://github.com/MIbnEKhalid" target="_blank" rel="noopener" class="social-btn" title="GitHub">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://x.com/ibnekhalid28" target="_blank" rel="noopener" class="social-btn" title="X / Twitter">
+              <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://youtube.com/@mibnekhalid" target="_blank" rel="noopener" class="social-btn" title="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://mbktech.org" target="_blank" rel="noopener" class="social-btn" title="MBKTech.org">
+              <i class="fa-solid fa-globe"></i>
+            </a>
+          </div>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-          <a href="https://github.com/MIbnEKhalid" target="_blank" class="btn-ghost btn-sm">
-            <i class="fa-brands fa-github"></i> GitHub
-          </a>
-          <a href="https://mbktech.org" target="_blank" class="btn-ghost btn-sm">
-            <i class="fa-solid fa-globe"></i> MBKTech.org
-          </a>
+
+        <!-- Quick Navigation Links -->
+        <div>
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="/"><i class="lni lni-chevron-right text-xs"></i> Home</a></li>
+            <li><a href="/dashboard"><i class="lni lni-chevron-right text-xs"></i> User Dashboard</a></li>
+            <li><a href="/admin"><i class="lni lni-chevron-right text-xs"></i> Admin Panel</a></li>
+            <li><a href="/mbkbucket"><i class="lni lni-chevron-right text-xs"></i> Object Storage (MBKBucket)</a></li>
+            <li><a href="/admin/db"><i class="lni lni-chevron-right text-xs"></i> Database Console (AdminDB)</a></li>
+          </ul>
+        </div>
+
+        <!-- Ecosystem Resources -->
+        <div>
+          <h4 class="footer-heading">Ecosystem</h4>
+          <ul class="footer-links">
+            <li><a href="https://mbktech.org" target="_blank" rel="noopener"><i class="lni lni-chevron-right text-xs"></i> MBKTech Studio</a></li>
+            <li><a href="https://core.mbktech.org" target="_blank" rel="noopener"><i class="lni lni-chevron-right text-xs"></i> Core Web Portal</a></li>
+            <li><a href="https://blog.mbktech.org" target="_blank" rel="noopener"><i class="lni lni-chevron-right text-xs"></i> Engineering Blog</a></li>
+            <li><a href="https://chat.mbktech.org" target="_blank" rel="noopener"><i class="lni lni-chevron-right text-xs"></i> Chat Platform</a></li>
+            <li><a href="https://unilib.mbktech.org" target="_blank" rel="noopener"><i class="lni lni-chevron-right text-xs"></i> Unilib Resources</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <strong>{{appName}}</strong> &copy; {{currentYear}} MBKTech.org. Built on the MBKTech Node.js ecosystem.
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+          <span style="color: #94a3b8;">Status: Operational</span>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- Highlight active nav link & mobile drawer handler -->
+  <script>
+    (function () {
+      // 1. Highlight active links
+      var path = window.location.pathname.replace(/\/+$/, "") || "/";
+      document.querySelectorAll("[data-nav]").forEach(function (link) {
+        var href = (link.getAttribute("href") || "").split("?")[0].replace(/\/+$/, "") || "/";
+        if (path === href || (href !== "/" && path.startsWith(href))) {
+          link.classList.add("active");
+        }
+      });
+
+      // 2. Mobile drawer toggle logic
+      var menuBtn = document.getElementById("mobileMenuBtn");
+      var drawer = document.getElementById("mobileDrawer");
+      var hamburgerIcon = document.getElementById("hamburgerIcon");
+      var closeIcon = document.getElementById("closeIcon");
+
+      if (menuBtn && drawer) {
+        menuBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          var isOpen = drawer.classList.contains("open");
+          if (isOpen) {
+            drawer.classList.remove("open");
+            menuBtn.setAttribute("aria-expanded", "false");
+            hamburgerIcon.classList.remove("hidden");
+            closeIcon.classList.add("hidden");
+          } else {
+            drawer.classList.add("open");
+            menuBtn.setAttribute("aria-expanded", "true");
+            hamburgerIcon.classList.add("hidden");
+            closeIcon.classList.remove("hidden");
+          }
+        });
+
+        // Close on link click
+        drawer.querySelectorAll("a").forEach(function (a) {
+          a.addEventListener("click", function () {
+            drawer.classList.remove("open");
+            hamburgerIcon.classList.remove("hidden");
+            closeIcon.classList.add("hidden");
+          });
+        });
+
+        // Close on click outside
+        document.addEventListener("click", function (e) {
+          if (!drawer.contains(e.target) && !menuBtn.contains(e.target)) {
+            drawer.classList.remove("open");
+            hamburgerIcon.classList.remove("hidden");
+            closeIcon.classList.add("hidden");
+          }
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>

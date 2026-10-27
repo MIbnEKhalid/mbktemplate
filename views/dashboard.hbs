@@ -2,14 +2,20 @@
   
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
     <div>
-      <h1 style="font-size: 1.75rem; font-weight: 700;">User Dashboard</h1>
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+        <span class="badge badge-primary"><i class="lni lni-user"></i> Active Session</span>
+      </div>
+      <h1 style="font-size: 1.85rem; font-weight: 700;">User Dashboard</h1>
       <p style="color: var(--text-muted); font-size: 0.9rem;">
-        Welcome back, <strong>{{userContext.username}}</strong>! This view is protected with <code>sessPerm(Permissions.items.read)</code>.
+        Welcome back, <strong>{{userContext.username}}</strong>! Protected via <code>sessPerm(Permissions.items.read)</code>.
       </p>
     </div>
-    <div style="display: flex; gap: 0.5rem;">
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="/mbkbucket" class="btn btn-secondary btn-sm">
+        <i class="lni lni-archive"></i> Storage
+      </a>
       <a href="/admin" class="btn btn-secondary btn-sm">
-        <i class="fa-solid fa-shield-halved"></i> Admin Area
+        <i class="lni lni-shield"></i> Admin Area
       </a>
       <a href="/mbkauthe/logout" class="btn btn-ghost btn-sm">
         <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
@@ -17,66 +23,90 @@
     </div>
   </div>
 
-  <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; margin-bottom: 2rem;">
+  <div class="dashboard-grid">
     <!-- Create Item Form Card -->
     <div class="card">
-      <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;">
-        <i class="fa-solid fa-plus-circle" style="color: var(--primary);"></i> Add Item
-      </h3>
-      <form id="createItemForm" style="display: flex; flex-direction: column; gap: 1rem;">
-        <div>
-          <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">Item Name</label>
-          <input type="text" id="itemName" name="name" required placeholder="e.g. Production Task #1" style="width: 100%; padding: 0.55rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-primary); color: var(--text-main);">
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+        <div style="width: 32px; height: 32px; border-radius: var(--radius-xs); background: var(--color-primary-light); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+          <i class="lni lni-plus"></i>
         </div>
-        <div>
-          <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">Description</label>
-          <textarea id="itemDesc" name="description" rows="3" placeholder="Optional details..." style="width: 100%; padding: 0.55rem; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg-primary); color: var(--text-main);"></textarea>
+        <h3 style="font-size: 1.15rem; font-weight: 700;">Create Item</h3>
+      </div>
+
+      <form id="createItemForm">
+        <div class="form-group">
+          <label class="form-label" for="itemName">Item Name</label>
+          <input type="text" id="itemName" name="name" required placeholder="e.g. Production Task #1">
         </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="itemDesc">Description</label>
+          <textarea id="itemDesc" name="description" rows="3" placeholder="Optional context or notes..."></textarea>
+        </div>
+
         <button type="submit" class="btn btn-primary" style="width: 100%;">
-          <i class="fa-solid fa-paper-plane"></i> Save Item
+          <i class="lni lni-checkmark"></i> Save Item
         </button>
       </form>
-      <div id="formFeedback" style="margin-top: 1rem; font-size: 0.85rem; display: none;"></div>
+      
+      <div id="formFeedback" style="margin-top: 1rem; font-size: 0.85rem; padding: 0.6rem 0.85rem; border-radius: var(--radius-xs); display: none;"></div>
     </div>
 
     <!-- Items Listing Table -->
     <div class="card">
-      <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem;">
-        <i class="fa-solid fa-list-check" style="color: var(--accent);"></i> Recent Items
-      </h3>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <div style="width: 32px; height: 32px; border-radius: var(--radius-xs); background: var(--color-accent-light); color: var(--color-accent); display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+            <i class="lni lni-list"></i>
+          </div>
+          <h3 style="font-size: 1.15rem; font-weight: 700;">Recent Items</h3>
+        </div>
+        <span class="badge badge-neutral">{{items.length}} Total</span>
+      </div>
+
       <div class="table-wrapper">
         <table>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Created By</th>
+              <th style="width: 80px;">ID</th>
+              <th>Name &amp; Details</th>
+              <th>Creator</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th style="text-align: right;">Action</th>
             </tr>
           </thead>
           <tbody id="itemsTableBody">
             {{#if items.length}}
               {{#each items}}
                 <tr id="item-row-{{this.id}}">
-                  <td>#{{this.id}}</td>
+                  <td style="font-family: var(--font-mono); color: var(--text-muted);">#{{this.id}}</td>
                   <td>
-                    <strong>{{this.name}}</strong>
-                    {{#if this.description}}<div style="font-size: 0.75rem; color: var(--text-muted);">{{this.description}}</div>{{/if}}
+                    <div style="font-weight: 600;">{{this.name}}</div>
+                    {{#if this.description}}
+                      <div style="font-size: 0.775rem; color: var(--text-muted); margin-top: 2px;">{{this.description}}</div>
+                    {{/if}}
                   </td>
-                  <td>{{this.created_by}}</td>
-                  <td><span class="badge badge-success">{{this.status}}</span></td>
                   <td>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteItem({{this.id}})" title="Delete Item">
-                      <i class="fa-solid fa-trash" style="color: var(--danger);"></i>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="lni lni-user text-xs"></i> {{this.created_by}}</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-success"><i class="lni lni-checkmark text-xs"></i> {{this.status}}</span>
+                  </td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-ghost btn-sm" onclick="deleteItem({{this.id}})" title="Delete Item" style="color: var(--color-danger);">
+                      <i class="lni lni-trash-can"></i>
                     </button>
                   </td>
                 </tr>
               {{/each}}
             {{else}}
               <tr>
-                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                  No items found. Create your first item above!
+                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 3rem 1rem;">
+                  <div style="font-size: 2rem; color: var(--text-subtle); margin-bottom: 0.5rem;">
+                    <i class="lni lni-inbox"></i>
+                  </div>
+                  <div style="font-weight: 600;">No items found</div>
+                  <div style="font-size: 0.825rem;">Create your first record using the form on the left!</div>
                 </td>
               </tr>
             {{/if}}
@@ -104,17 +134,20 @@ document.getElementById('createItemForm').addEventListener('submit', async (e) =
     const result = await res.json();
     if (result.success) {
       feedback.style.display = 'block';
-      feedback.style.color = 'var(--success)';
-      feedback.textContent = 'Item created successfully! Refreshing...';
-      setTimeout(() => window.location.reload(), 800);
+      feedback.style.background = 'var(--color-success-light)';
+      feedback.style.color = '#065f46';
+      feedback.textContent = 'Item created successfully! Reloading...';
+      setTimeout(() => window.location.reload(), 700);
     } else {
       feedback.style.display = 'block';
-      feedback.style.color = 'var(--danger)';
+      feedback.style.background = 'var(--color-danger-light)';
+      feedback.style.color = 'var(--color-danger)';
       feedback.textContent = result.error?.message || result.error || 'Failed to create item';
     }
   } catch (err) {
     feedback.style.display = 'block';
-    feedback.style.color = 'var(--danger)';
+    feedback.style.background = 'var(--color-danger-light)';
+    feedback.style.color = 'var(--color-danger)';
     feedback.textContent = err.message;
   }
 });

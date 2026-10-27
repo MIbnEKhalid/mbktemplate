@@ -22,18 +22,26 @@ const MANIFEST = {
     view: "Access administrative area",
     manage: "Manage application settings and users",
   },
+  storage: {
+    view: "View and download bucket files",
+    upload: "Upload bucket files",
+    delete: "Delete bucket files",
+  },
+  admindb: {
+    access: "Access database management console",
+  },
 };
 
 const ROLES = {
   admin: {
     label: "Application Administrator",
-    description: "Full administrative access to items and admin panel",
-    permissions: ["items:*", "admin:*"],
+    description: "Full administrative access to items, storage, and database management",
+    permissions: ["items:*", "admin:*", "storage:*", "admindb:*"],
   },
   normaluser: {
     label: "Standard User",
-    description: "Permission to read and create items",
-    permissions: ["items:read", "items:create"],
+    description: "Permission to read and create items, and view storage",
+    permissions: ["items:read", "items:create", "storage:view"],
   },
 };
 
